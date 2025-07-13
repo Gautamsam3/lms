@@ -9,10 +9,17 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load();
 
-  await Supabase.initialize(
-    url: dotenv.env['SUPABASE_URL']!,
-    anonKey: dotenv.env['SUPABASE_ANON_KEY']!,
-  );
+final supabaseUrl = dotenv.env['SUPABASE_URL'];
+final supabaseAnonKey = dotenv.env['SUPABASE_ANON_KEY'];
+
+if (supabaseUrl == null || supabaseAnonKey == null) {
+  throw Exception('Missing required Supabase environment variables');
+}
+
+await Supabase.initialize(
+  url: supabaseUrl,
+  anonKey: supabaseAnonKey,
+);
   
   runApp(MyApp());
 }
