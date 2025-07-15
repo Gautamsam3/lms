@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'dart:async';
 import 'landing_page.dart';
 import 'profile_screen.dart';
@@ -10,18 +9,10 @@ import 'home_page.dart';
 //Main Function
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load();
-
-  final supabaseUrl = dotenv.env['SUPABASE_URL'];
-  final supabaseAnonKey = dotenv.env['SUPABASE_ANON_KEY'];
-
-  if (supabaseUrl == null || supabaseAnonKey == null) {
-    throw Exception('Missing required Supabase environment variables');
-  }
 
   await Supabase.initialize(
-    url: supabaseUrl,
-    anonKey: supabaseAnonKey,
+    url: 'https://oswbyzlotnshvusgndcg.supabase.co',
+    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9zd2J5emxvdG5zaHZ1c2duZGNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIzNzkwMjIsImV4cCI6MjA2Nzk1NTAyMn0.zoOdiJSxX9fCZElu6nCfLobm6IfNi-L40GI_29AX44s',
   );
 
   runApp(const MyApp());
