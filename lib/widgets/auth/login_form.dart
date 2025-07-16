@@ -232,8 +232,24 @@ class _LoginFormState extends State<LoginForm> {
                     child: BackdropFilter(
                       filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                       child: OutlinedButton.icon(
-                        onPressed: () {
-                          // Handle Google login
+                        onPressed: () async {
+                          String? error = await _authService.signInWithGoogle();
+                          if (error == null) {
+                            // Success - navigate to main screen
+                            if (mounted) {
+                              Navigator.pushReplacementNamed(context, '/main');
+                            }
+                          } else {
+                            // Show error message
+                            if (mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(error),
+                                  backgroundColor: Colors.red,
+                                ),
+                              );
+                            }
+                          }
                         },
                         style: OutlinedButton.styleFrom(
                           backgroundColor: Colors.white.withOpacity(0.1),

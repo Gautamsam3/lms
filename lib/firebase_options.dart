@@ -60,6 +60,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '516818658780',
     projectId: 'friend-lms-01',
     storageBucket: 'friend-lms-01.firebasestorage.app',
+    iosClientId: '516818658780-vuhfitig83hieqjr8shgkd04iq65d0b3.apps.googleusercontent.com',
     iosBundleId: 'com.example.lms',
   );
 
