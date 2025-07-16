@@ -1,6 +1,15 @@
 import 'package:flutter/material.dart';
+import 'login.dart';
+import 'supabase_service.dart';
+// ignore: unused_import
+import 'signup.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  // Initialize Supabase
+  await SupabaseService.initialize();
+  
   runApp(const CollegeNotesApp());
 }
 
@@ -19,7 +28,7 @@ class CollegeNotesApp extends StatelessWidget {
         useMaterial3: true,
         fontFamily: 'Roboto',
       ),
-      home: const MainScreen(),
+      home: const HomePage(),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -76,31 +85,39 @@ class _MainScreenState extends State {
           ),
         ],
       ),
-      floatingActionButton: _selectedIndex == 1 || _selectedIndex == 2
-          ? FloatingActionButton.extended(
-              onPressed: () {
-                _showAddDialog(context);
-              },
-              icon: const Icon(Icons.add),
-              label: Text(_selectedIndex == 1 ? 'Add Note' : 'Add Opportunity'),
-            )
-          : null,
+      floatingActionButton:
+          _selectedIndex == 1 || _selectedIndex == 2
+              ? FloatingActionButton.extended(
+                onPressed: () {
+                  _showAddDialog(context);
+                },
+                icon: const Icon(Icons.add),
+                label: Text(
+                  _selectedIndex == 1 ? 'Add Note' : 'Add Opportunity',
+                ),
+              )
+              : null,
     );
   }
 
   void _showAddDialog(BuildContext context) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(_selectedIndex == 1 ? 'Add New Note' : 'Add New Opportunity'),
-        content: const Text('Feature will be implemented with backend integration.'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('OK'),
+      builder:
+          (context) => AlertDialog(
+            title: Text(
+              _selectedIndex == 1 ? 'Add New Note' : 'Add New Opportunity',
+            ),
+            content: const Text(
+              'Feature will be implemented with backend integration.',
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('OK'),
+              ),
+            ],
           ),
-        ],
-      ),
     );
   }
 }
@@ -115,10 +132,7 @@ class HomeScreen extends StatelessWidget {
         title: const Text('College Hub'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () {},
-          ),
+          IconButton(icon: const Icon(Icons.search), onPressed: () {}),
           IconButton(
             icon: const Icon(Icons.notifications_outlined),
             onPressed: () {},
@@ -180,10 +194,7 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(height: 24),
 
             // Recent Notes Section
-            Text(
-              'Recent Notes',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
+            Text('Recent Notes', style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: 16),
             ListView.builder(
               shrinkWrap: true,
@@ -215,8 +226,13 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildStatCard(BuildContext context, String title, String value,
-                       IconData icon, Color color) {
+  Widget _buildStatCard(
+    BuildContext context,
+    String title,
+    String value,
+    IconData icon,
+    Color color,
+  ) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -226,9 +242,9 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               value,
-              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(
+                context,
+              ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
             ),
             Text(
               title,
@@ -243,9 +259,21 @@ class HomeScreen extends StatelessWidget {
 
   Widget _buildNoteCard(BuildContext context, int index) {
     final notes = [
-      {'title': 'Data Structures - Chapter 5', 'subject': 'Computer Science', 'author': 'g Doe'},
-      {'title': 'Calculus Integration Notes', 'subject': 'Mathematics', 'author': 'Jane Smith'},
-      {'title': 'Physics Mechanics Summary', 'subject': 'Physics', 'author': 'Mike Johnson'},
+      {
+        'title': 'Data Structures - Chapter 5',
+        'subject': 'Computer Science',
+        'author': 'John Doe',
+      },
+      {
+        'title': 'Calculus Integration Notes',
+        'subject': 'Mathematics',
+        'author': 'Jane Smith',
+      },
+      {
+        'title': 'Physics Mechanics Summary',
+        'subject': 'Physics',
+        'author': 'Mike Johnson',
+      },
     ];
 
     return Card(
@@ -256,7 +284,9 @@ class HomeScreen extends StatelessWidget {
           child: const Icon(Icons.note, color: Colors.white),
         ),
         title: Text(notes[index]['title']!),
-        subtitle: Text('${notes[index]['subject']} • ${notes[index]['author']}'),
+        subtitle: Text(
+          '${notes[index]['subject']} • ${notes[index]['author']}',
+        ),
         trailing: IconButton(
           icon: const Icon(Icons.bookmark_border),
           onPressed: () {},
@@ -267,8 +297,16 @@ class HomeScreen extends StatelessWidget {
 
   Widget _buildOpportunityCard(BuildContext context, int index) {
     final opportunities = [
-      {'title': 'Summer Internship at Tech Corp', 'type': 'Internship', 'deadline': '2 days left'},
-      {'title': 'Research Assistant Position', 'type': 'Job', 'deadline': '1 week left'},
+      {
+        'title': 'Summer Internship at Tech Corp',
+        'type': 'Internship',
+        'deadline': '2 days left',
+      },
+      {
+        'title': 'Research Assistant Position',
+        'type': 'Job',
+        'deadline': '1 week left',
+      },
     ];
 
     return Card(
@@ -279,7 +317,9 @@ class HomeScreen extends StatelessWidget {
           child: const Icon(Icons.work, color: Colors.white),
         ),
         title: Text(opportunities[index]['title']!),
-        subtitle: Text('${opportunities[index]['type']} • ${opportunities[index]['deadline']}'),
+        subtitle: Text(
+          '${opportunities[index]['type']} • ${opportunities[index]['deadline']}',
+        ),
         trailing: IconButton(
           icon: const Icon(Icons.arrow_forward_ios),
           onPressed: () {},
@@ -298,7 +338,14 @@ class NotesScreen extends StatefulWidget {
 
 class _NotesScreenState extends State {
   String selectedCategory = 'All';
-  final List categories = ['All', 'Computer Science', 'Mathematics', 'Physics', 'Chemistry', 'Biology'];
+  final List categories = [
+    'All',
+    'Computer Science',
+    'Mathematics',
+    'Physics',
+    'Chemistry',
+    'Biology',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -307,14 +354,8 @@ class _NotesScreenState extends State {
         title: const Text('Notes'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: const Icon(Icons.filter_list),
-            onPressed: () {},
-          ),
+          IconButton(icon: const Icon(Icons.search), onPressed: () {}),
+          IconButton(icon: const Icon(Icons.filter_list), onPressed: () {}),
         ],
       ),
       body: Column(
@@ -369,7 +410,7 @@ class _NotesScreenState extends State {
         'author': 'Sarah Wilson',
         'rating': 4.8,
         'downloads': 234,
-        'date': '2 days ago'
+        'date': '2 days ago',
       },
       {
         'title': 'Calculus II - Integration Techniques',
@@ -377,7 +418,7 @@ class _NotesScreenState extends State {
         'author': 'Robert Chen',
         'rating': 4.6,
         'downloads': 156,
-        'date': '5 days ago'
+        'date': '5 days ago',
       },
       {
         'title': 'Quantum Mechanics Basics',
@@ -385,7 +426,7 @@ class _NotesScreenState extends State {
         'author': 'Emily Davis',
         'rating': 4.9,
         'downloads': 89,
-        'date': '1 week ago'
+        'date': '1 week ago',
       },
     ];
 
@@ -408,10 +449,7 @@ class _NotesScreenState extends State {
                     ),
                   ),
                 ),
-                IconButton(
-                  icon: const Icon(Icons.more_vert),
-                  onPressed: () {},
-                ),
+                IconButton(icon: const Icon(Icons.more_vert), onPressed: () {}),
               ],
             ),
             const SizedBox(height: 8),
@@ -484,7 +522,14 @@ class OpportunitiesScreen extends StatefulWidget {
 
 class _OpportunitiesScreenState extends State {
   String selectedType = 'All';
-  final List types = ['All', 'Internship', 'Job', 'Research', 'Event', 'Workshop'];
+  final List types = [
+    'All',
+    'Internship',
+    'Job',
+    'Research',
+    'Event',
+    'Workshop',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -493,14 +538,8 @@ class _OpportunitiesScreenState extends State {
         title: const Text('Opportunities'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: const Icon(Icons.filter_list),
-            onPressed: () {},
-          ),
+          IconButton(icon: const Icon(Icons.search), onPressed: () {}),
+          IconButton(icon: const Icon(Icons.filter_list), onPressed: () {}),
         ],
       ),
       body: Column(
@@ -595,9 +634,8 @@ class _OpportunitiesScreenState extends State {
                     children: [
                       Text(
                         opportunity['title'] as String,
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 4),
                       Text(
@@ -609,7 +647,10 @@ class _OpportunitiesScreenState extends State {
                 ),
                 if (opportunity['urgent'] as bool)
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 4,
+                    ),
                     decoration: BoxDecoration(
                       color: Colors.red,
                       borderRadius: BorderRadius.circular(12),
@@ -704,12 +745,7 @@ class ProfileScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Profile'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.edit),
-            onPressed: () {},
-          ),
-        ],
+        actions: [IconButton(icon: const Icon(Icons.edit), onPressed: () {})],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -724,7 +760,11 @@ class ProfileScreen extends StatelessWidget {
                     CircleAvatar(
                       radius: 50,
                       backgroundColor: Theme.of(context).colorScheme.primary,
-                      child: const Icon(Icons.person, size: 50, color: Colors.white),
+                      child: const Icon(
+                        Icons.person,
+                        size: 50,
+                        color: Colors.white,
+                      ),
                     ),
                     const SizedBox(height: 16),
                     Text(
@@ -751,11 +791,21 @@ class ProfileScreen extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: _buildStatCard(context, 'Notes Shared', '12', Icons.note),
+                  child: _buildStatCard(
+                    context,
+                    'Notes Shared',
+                    '12',
+                    Icons.note,
+                  ),
                 ),
                 const SizedBox(width: 16),
                 Expanded(
-                  child: _buildStatCard(context, 'Downloads', '456', Icons.download),
+                  child: _buildStatCard(
+                    context,
+                    'Downloads',
+                    '456',
+                    Icons.download,
+                  ),
                 ),
               ],
             ),
@@ -763,11 +813,21 @@ class ProfileScreen extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: _buildStatCard(context, 'Applications', '8', Icons.send),
+                  child: _buildStatCard(
+                    context,
+                    'Applications',
+                    '8',
+                    Icons.send,
+                  ),
                 ),
                 const SizedBox(width: 16),
                 Expanded(
-                  child: _buildStatCard(context, 'Bookmarks', '34', Icons.bookmark),
+                  child: _buildStatCard(
+                    context,
+                    'Bookmarks',
+                    '34',
+                    Icons.bookmark,
+                  ),
                 ),
               ],
             ),
@@ -792,7 +852,15 @@ class ProfileScreen extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: OutlinedButton.icon(
-                onPressed: () {},
+                onPressed: () async {
+                  await SupabaseService.signOut();
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const HomePage(),
+                    ),
+                  );
+                },
                 icon: const Icon(Icons.logout),
                 label: const Text('Logout'),
                 style: OutlinedButton.styleFrom(
@@ -807,7 +875,12 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildStatCard(BuildContext context, String title, String value, IconData icon) {
+  Widget _buildStatCard(
+    BuildContext context,
+    String title,
+    String value,
+    IconData icon,
+  ) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -817,9 +890,9 @@ class ProfileScreen extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               value,
-              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(
+                context,
+              ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
             ),
             Text(
               title,
@@ -832,7 +905,12 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildMenuItem(BuildContext context, String title, IconData icon, VoidCallback onTap) {
+  Widget _buildMenuItem(
+    BuildContext context,
+    String title,
+    IconData icon,
+    VoidCallback onTap,
+  ) {
     return ListTile(
       leading: Icon(icon),
       title: Text(title),
