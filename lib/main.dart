@@ -1,6 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'screens/auth/login_screen.dart';
+import 'screens/auth/signup_screen.dart';
+import 'screens/auth/forgot_password_screen.dart';
+import 'utils/user_data.dart';
+import 'services/auth_service.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const CollegeNotesApp());
 }
 
@@ -19,8 +30,14 @@ class CollegeNotesApp extends StatelessWidget {
         useMaterial3: true,
         fontFamily: 'Roboto',
       ),
-      home: const MainScreen(),
       debugShowCheckedModeBanner: false,
+      initialRoute: '/',
+  routes: {
+    '/': (context) => const LoginScreen(),
+    '/signup': (context) => const SignUpScreen(),
+    '/forgot-password': (context) => const ForgotPasswordScreen(),
+    '/main': (context) => const MainScreen(),
+  },
     );
   }
 }
@@ -728,7 +745,7 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      'John Doe',
+                      UserData.userName,
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     const SizedBox(height: 8),
@@ -738,7 +755,7 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'john.doe@college.edu',
+                      UserData.userEmail,
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ],
@@ -792,7 +809,10 @@ class ProfileScreen extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: OutlinedButton.icon(
-                onPressed: () {},
+                onPressed: () async {
+                  await AuthService().signOut();
+                  Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+                },
                 icon: const Icon(Icons.logout),
                 label: const Text('Logout'),
                 style: OutlinedButton.styleFrom(
