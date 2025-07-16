@@ -3,7 +3,7 @@ import 'dart:ui';
 import '../../../services/auth_service.dart';
 
 class SignUpForm extends StatefulWidget {
-  const SignUpForm({Key? key}) : super(key: key);
+  const SignUpForm({super.key});
 
   @override
   State<SignUpForm> createState() => _SignUpFormState();
@@ -47,14 +47,12 @@ class _SignUpFormState extends State<SignUpForm> {
       _isLoading = false;
     });
 
-    if (error == null) {
-      // Success - navigate to main screen
-      if (mounted) {
+    if (context.mounted) {
+      if (error == null) {
+        // Success - navigate to main screen
         Navigator.pushReplacementNamed(context, '/main');
-      }
-    } else {
-      // Show error message
-      if (mounted) {
+      } else {
+        // Show error message
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(error),
@@ -82,10 +80,10 @@ class _SignUpFormState extends State<SignUpForm> {
         child: Container(
           padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.1),
+            color: Colors.white.withValues(alpha:0.1),
             borderRadius: BorderRadius.circular(20),
             border: Border.all(
-              color: Colors.white.withOpacity(0.2),
+              color: Colors.white.withValues(alpha:0.2),
               width: 1,
             ),
           ),
@@ -139,7 +137,7 @@ class _SignUpFormState extends State<SignUpForm> {
                   suffixIcon: IconButton(
                     icon: Icon(
                       _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
-                      color: Colors.white.withOpacity(0.7),
+                      color: Colors.white.withValues(alpha:0.7),
                     ),
                     onPressed: () {
                       setState(() {
@@ -172,7 +170,7 @@ class _SignUpFormState extends State<SignUpForm> {
                   suffixIcon: IconButton(
                     icon: Icon(
                       _isConfirmPasswordVisible ? Icons.visibility : Icons.visibility_off,
-                      color: Colors.white.withOpacity(0.7),
+                      color: Colors.white.withValues(alpha:0.7),
                     ),
                     onPressed: () {
                       setState(() {
@@ -202,10 +200,10 @@ class _SignUpFormState extends State<SignUpForm> {
                         filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                         child: Container(
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.1),
+                            color: Colors.white.withValues(alpha:0.1),
                             borderRadius: BorderRadius.circular(4),
                             border: Border.all(
-                              color: Colors.white.withOpacity(0.3),
+                              color: Colors.white.withValues(alpha:0.3),
                               width: 1,
                             ),
                           ),
@@ -216,7 +214,7 @@ class _SignUpFormState extends State<SignUpForm> {
                                 _agreeToTerms = value ?? false;
                               });
                             },
-                            fillColor: MaterialStateProperty.all(Colors.transparent),
+                            fillColor: WidgetStateProperty.all(Colors.transparent),
                             checkColor: Colors.white,
                             side: BorderSide.none,
                           ),
@@ -228,7 +226,7 @@ class _SignUpFormState extends State<SignUpForm> {
                       child: RichText(
                         text: TextSpan(
                           style: TextStyle(
-                            color: Colors.white.withOpacity(0.8),
+                            color: Colors.white.withValues(alpha:0.8),
                             fontSize: 14,
                           ),
                           children: const [
@@ -268,13 +266,13 @@ class _SignUpFormState extends State<SignUpForm> {
                       child: ElevatedButton(
                         onPressed: _isLoading ? null : _handleSignUp,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white.withOpacity(0.2),
+                          backgroundColor: Colors.white.withValues(alpha:0.2),
                           foregroundColor: Colors.white,
                           elevation: 0,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
                             side: BorderSide(
-                              color: Colors.white.withOpacity(0.3),
+                              color: Colors.white.withValues(alpha:0.3),
                               width: 1,
                             ),
                           ),
@@ -322,10 +320,10 @@ class _SignUpFormState extends State<SignUpForm> {
         filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.1),
+            color: Colors.white.withValues(alpha:0.1),
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: Colors.white.withOpacity(0.2),
+              color: Colors.white.withValues(alpha:0.2),
               width: 1,
             ),
           ),
@@ -338,11 +336,11 @@ class _SignUpFormState extends State<SignUpForm> {
             decoration: InputDecoration(
               hintText: hintText,
               hintStyle: TextStyle(
-                color: Colors.white.withOpacity(0.6),
+                color: Colors.white.withValues(alpha:0.6),
               ),
               prefixIcon: Icon(
                 prefixIcon,
-                color: Colors.white.withOpacity(0.7),
+                color: Colors.white.withValues(alpha:0.7),
               ),
               suffixIcon: suffixIcon,
               border: InputBorder.none,

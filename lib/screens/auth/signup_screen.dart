@@ -47,10 +47,10 @@ class SignUpScreen extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.1),
+                    color: Colors.white.withValues(alpha:0.1),
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
-                      color: Colors.white.withOpacity(0.2),
+                      color: Colors.white.withValues(alpha:0.2),
                       width: 1,
                     ),
                   ),
@@ -78,7 +78,7 @@ class SignUpScreen extends StatelessWidget {
                   'Sign up to get started',
                   style: TextStyle(
                     fontSize: 16,
-                    color: Colors.white.withOpacity(0.8),
+                    color: Colors.white.withValues(alpha:0.8),
                   ),
                 ),
                 
@@ -96,7 +96,7 @@ class SignUpScreen extends StatelessWidget {
                     Text(
                       "Already have an account? ",
                       style: TextStyle(
-                        color: Colors.white.withOpacity(0.8),
+                        color: Colors.white.withValues(alpha:0.8),
                         fontSize: 16,
                       ),
                     ),

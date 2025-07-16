@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'screens/auth/login_screen.dart';
 import 'screens/auth/signup_screen.dart';
 import 'screens/auth/forgot_password_screen.dart';
 import 'utils/user_data.dart';
+import 'utils/theme_manager.dart';
 import 'services/auth_service.dart';
 
 void main() async {
@@ -12,7 +14,12 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const CollegeNotesApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ThemeManager(),
+      child: const CollegeNotesApp(),
+    ),
+  );
 }
 
 class CollegeNotesApp extends StatelessWidget {
@@ -20,24 +27,23 @@ class CollegeNotesApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'College Notes & Opportunities',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF6750A4),
-          brightness: Brightness.light,
-        ),
-        useMaterial3: true,
-        fontFamily: 'Roboto',
-      ),
-      debugShowCheckedModeBanner: false,
-      initialRoute: '/',
-  routes: {
-    '/': (context) => const LoginScreen(),
-    '/signup': (context) => const SignUpScreen(),
-    '/forgot-password': (context) => const ForgotPasswordScreen(),
-    '/main': (context) => const MainScreen(),
-  },
+    return Consumer<ThemeManager>(
+      builder: (context, themeManager, child) {
+        return MaterialApp(
+          title: 'College Notes & Opportunities',
+          theme: lightTheme,
+          darkTheme: darkTheme,
+          themeMode: themeManager.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+          debugShowCheckedModeBanner: false,
+          initialRoute: '/',
+          routes: {
+            '/': (context) => const LoginScreen(),
+            '/signup': (context) => const SignUpScreen(),
+            '/forgot-password': (context) => const ForgotPasswordScreen(),
+            '/main': (context) => const MainScreen(),
+          },
+        );
+      },
     );
   }
 }
@@ -139,6 +145,20 @@ class HomeScreen extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.notifications_outlined),
             onPressed: () {},
+          ),
+          // Theme Toggle Button
+          Consumer<ThemeManager>(
+            builder: (context, themeManager, child) {
+              return IconButton(
+                onPressed: () {
+                  themeManager.toggleTheme();
+                },
+                icon: Icon(
+                  themeManager.isDarkMode ? Icons.light_mode : Icons.dark_mode,
+                ),
+                tooltip: themeManager.isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode',
+              );
+            },
           ),
         ],
       ),

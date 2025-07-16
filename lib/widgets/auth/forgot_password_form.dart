@@ -38,7 +38,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
 
     if (error == null) {
       // Success
-      if (mounted) {
+      if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Password reset link sent to your email!'),
@@ -48,14 +48,14 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
         
         // Navigate back to login after a delay
         Future.delayed(const Duration(seconds: 2), () {
-          if (mounted) {
+          if (context.mounted) {
             Navigator.pop(context);
           }
         });
       }
     } else {
       // Show error
-      if (mounted) {
+      if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(error),
@@ -76,10 +76,10 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
         child: Container(
           padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.1),
+            color: Colors.white.withValues(alpha:0.1),
             borderRadius: BorderRadius.circular(20),
             border: Border.all(
-              color: Colors.white.withOpacity(0.2),
+              color: Colors.white.withValues(alpha:0.2),
               width: 1,
             ),
           ),
@@ -91,7 +91,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
                   'Enter your email address and we\'ll send you a link to reset your password.',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Colors.white.withOpacity(0.8),
+                    color: Colors.white.withValues(alpha:0.8),
                     fontSize: 16,
                     height: 1.5,
                   ),
@@ -106,10 +106,10 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
                     filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.1),
+                        color: Colors.white.withValues(alpha:0.1),
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
-                          color: Colors.white.withOpacity(0.2),
+                          color: Colors.white.withValues(alpha:0.2),
                           width: 1,
                         ),
                       ),
@@ -129,11 +129,11 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
                         decoration: InputDecoration(
                           hintText: 'Email',
                           hintStyle: TextStyle(
-                            color: Colors.white.withOpacity(0.6),
+                            color: Colors.white.withValues(alpha:0.6),
                           ),
                           prefixIcon: Icon(
                             Icons.email_outlined,
-                            color: Colors.white.withOpacity(0.7),
+                            color: Colors.white.withValues(alpha:0.7),
                           ),
                           border: InputBorder.none,
                           contentPadding: const EdgeInsets.symmetric(
@@ -159,13 +159,13 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
                       child: ElevatedButton(
                         onPressed: _isLoading ? null : _handleResetPassword,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white.withOpacity(0.2),
+                          backgroundColor: Colors.white.withValues(alpha:0.2),
                           foregroundColor: Colors.white,
                           elevation: 0,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
                             side: BorderSide(
-                              color: Colors.white.withOpacity(0.3),
+                              color: Colors.white.withValues(alpha:0.3),
                               width: 1,
                             ),
                           ),
@@ -201,7 +201,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
                   child: Text(
                     'Back to Login',
                     style: TextStyle(
-                      color: Colors.white.withOpacity(0.8),
+                      color: Colors.white.withValues(alpha:0.8),
                       fontSize: 16,
                       decoration: TextDecoration.underline,
                     ),

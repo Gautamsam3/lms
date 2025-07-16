@@ -42,12 +42,12 @@ class _LoginFormState extends State<LoginForm> {
 
     if (error == null) {
       // Success - navigate to main screen
-      if (mounted) {
+      if (context.mounted) {
         Navigator.pushReplacementNamed(context, '/main');
       }
     } else {
       // Show error message
-      if (mounted) {
+      if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(error),
@@ -68,10 +68,10 @@ class _LoginFormState extends State<LoginForm> {
         child: Container(
           padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.1),
+            color: Colors.white.withValues(alpha:0.1),
             borderRadius: BorderRadius.circular(20),
             border: Border.all(
-              color: Colors.white.withOpacity(0.2),
+              color: Colors.white.withValues(alpha:0.2),
               width: 1,
             ),
           ),
@@ -107,7 +107,7 @@ class _LoginFormState extends State<LoginForm> {
                   suffixIcon: IconButton(
                     icon: Icon(
                       _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
-                      color: Colors.white.withOpacity(0.7),
+                      color: Colors.white.withValues(alpha:0.7),
                     ),
                     onPressed: () {
                       setState(() {
@@ -138,7 +138,7 @@ class _LoginFormState extends State<LoginForm> {
                     child: Text(
                       'Forgot Password?',
                       style: TextStyle(
-                        color: Colors.white.withOpacity(0.8),
+                        color: Colors.white.withValues(alpha:0.8),
                         fontSize: 14,
                         decoration: TextDecoration.underline,
                       ),
@@ -159,13 +159,13 @@ class _LoginFormState extends State<LoginForm> {
                       child: ElevatedButton(
                         onPressed: _isLoading ? null : _handleLogin,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white.withOpacity(0.2),
+                          backgroundColor: Colors.white.withValues(alpha:0.2),
                           foregroundColor: Colors.white,
                           elevation: 0,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
                             side: BorderSide(
-                              color: Colors.white.withOpacity(0.3),
+                              color: Colors.white.withValues(alpha:0.3),
                               width: 1,
                             ),
                           ),
@@ -198,7 +198,7 @@ class _LoginFormState extends State<LoginForm> {
                   children: [
                     Expanded(
                       child: Divider(
-                        color: Colors.white.withOpacity(0.3),
+                        color: Colors.white.withValues(alpha:0.3),
                         thickness: 1,
                       ),
                     ),
@@ -207,14 +207,14 @@ class _LoginFormState extends State<LoginForm> {
                       child: Text(
                         'OR',
                         style: TextStyle(
-                          color: Colors.white.withOpacity(0.6),
+                          color: Colors.white.withValues(alpha:0.6),
                           fontSize: 14,
                         ),
                       ),
                     ),
                     Expanded(
                       child: Divider(
-                        color: Colors.white.withOpacity(0.3),
+                        color: Colors.white.withValues(alpha:0.3),
                         thickness: 1,
                       ),
                     ),
@@ -236,12 +236,12 @@ class _LoginFormState extends State<LoginForm> {
                           String? error = await _authService.signInWithGoogle();
                           if (error == null) {
                             // Success - navigate to main screen
-                            if (mounted) {
+                            if (context.mounted) {
                               Navigator.pushReplacementNamed(context, '/main');
                             }
                           } else {
                             // Show error message
-                            if (mounted) {
+                            if (context.mounted) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(error),
@@ -252,10 +252,10 @@ class _LoginFormState extends State<LoginForm> {
                           }
                         },
                         style: OutlinedButton.styleFrom(
-                          backgroundColor: Colors.white.withOpacity(0.1),
+                          backgroundColor: Colors.white.withValues(alpha:0.1),
                           foregroundColor: Colors.white,
                           side: BorderSide(
-                            color: Colors.white.withOpacity(0.3),
+                            color: Colors.white.withValues(alpha:0.3),
                             width: 1,
                           ),
                           shape: RoundedRectangleBorder(
@@ -297,10 +297,10 @@ class _LoginFormState extends State<LoginForm> {
         filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.1),
+            color: Colors.white.withValues(alpha:0.1),
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: Colors.white.withOpacity(0.2),
+              color: Colors.white.withValues(alpha:0.2),
               width: 1,
             ),
           ),
@@ -313,11 +313,11 @@ class _LoginFormState extends State<LoginForm> {
             decoration: InputDecoration(
               hintText: hintText,
               hintStyle: TextStyle(
-                color: Colors.white.withOpacity(0.6),
+                color: Colors.white.withValues(alpha:0.6),
               ),
               prefixIcon: Icon(
                 prefixIcon,
-                color: Colors.white.withOpacity(0.7),
+                color: Colors.white.withValues(alpha:0.7),
               ),
               suffixIcon: suffixIcon,
               border: InputBorder.none,
