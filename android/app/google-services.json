@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "516818658780",
+    "project_id": "friend-lms-01",
+    "storage_bucket": "friend-lms-01.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:516818658780:android:48e63b5aa28eea818c1b19",
+        "android_client_info": {
+          "package_name": "com.example.lms"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "516818658780-6727nc7qftabf640jlt1oh39p0c4pbks.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5vDZ5XiQ9MKdVWyMWSprFdu1dTKGonzo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "516818658780-6727nc7qftabf640jlt1oh39p0c4pbks.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "516818658780-vuhfitig83hieqjr8shgkd04iq65d0b3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.lms"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
